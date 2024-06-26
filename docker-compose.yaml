@@ -12,13 +12,13 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - MY_NAME="Spiderweb Control"
+      - MY_NAME=Spiderweb Control
     env_file:
       - .env
     volumes:
       - ./:/home/app
-    networks:
-      - my-net
+    # networks:
+    #   - my-net
 
   spidey_1:
     build:
@@ -37,8 +37,8 @@ services:
       - .env
     volumes:
       - ./:/home/app
-    networks:
-      - my-net
+    # networks:
+    #   - my-net
 
   spidey_2:
     build:
@@ -57,8 +57,8 @@ services:
       - .env
     volumes:
       - ./:/home/app
-    networks:
-      - my-net
+    # networks:
+    #   - my-net
 
   spidey_3:
     build:
@@ -77,8 +77,8 @@ services:
       - .env
     volumes:
       - ./:/home/app
-    networks:
-      - my-net
+    # networks:
+    #   - my-net
 
   kafka-ui:
     image: provectuslabs/kafka-ui
@@ -89,8 +89,8 @@ services:
     environment:
       - KAFKA_CLUSTERS_0_NAME=local
       - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=kafka:29092
-    networks:
-      - my-net
+    # networks:
+    #   - my-net
 
   kafka:
     image: obsidiandynamics/kafka
@@ -113,9 +113,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 15
-    networks:
-      - my-net
+    # networks:
+    #   - my-net
 
-networks:
-  my-net:
-    external: true
+# networks:
+#   my-net:
+#     external: true

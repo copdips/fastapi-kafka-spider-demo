@@ -1,8 +1,8 @@
 import asyncio
 import json
 import os
-from typing import List
 from random import shuffle
+from typing import List
 
 from aiokafka import AIOKafkaConsumer, AIOKafkaProducer
 from dotenv import load_dotenv
@@ -10,7 +10,7 @@ from fastapi import FastAPI
 
 app = FastAPI()
 load_dotenv()
-loop = asyncio.get_event_loop()
+# loop = asyncio.get_event_loop()
 
 spidey_names: List[str] = os.environ.get("SPIDEY_NAMES").split(",")
 kafka_bootstrap_servers: str = os.environ.get("KAFKA_BOOTSTRAP_SERVERS")
@@ -18,9 +18,10 @@ spiderweb_topic: str = os.environ.get("SPIDERWEB_TOPIC")
 my_name: str = os.environ.get("MY_NAME")
 
 mapping_place = {
-    3: "name is the Winner!!!",
-    2: "name is the Second Place!!!",
-    1: "name is the third Place!!!",
+    4: "name is the Winner!!!",
+    3: "name is the Second Place!!!",
+    2: "name is the third Place!!!",
+    1: "name is the forth Place!!!",
 }
 
 
@@ -55,6 +56,7 @@ async def send_one(topic: str, msg: List):
         await producer.start()
 
         try:
+            print(f"my_name: {my_name} send: {msg}")
             await producer.send_and_wait(topic, kafka_serializer(msg))
         finally:
             await producer.stop()
@@ -66,6 +68,7 @@ async def send_one(topic: str, msg: List):
 async def spiderweb_turn(msg):
     finalists = encode_json(msg)
     is_my_turn = check_spidey(finalists)
+    print(f"my_name: {my_name}, got {finalists}, is_my_turn: {is_my_turn}")
 
     if is_my_turn:
         print(mapping_place[len(finalists)].replace('name', my_name))
@@ -83,7 +86,7 @@ kafka_actions = {
 async def consume():
     consumer = AIOKafkaConsumer(
         spiderweb_topic,
-        loop=loop,
+        # loop=loop,
         bootstrap_servers=kafka_bootstrap_servers,
     )
 
@@ -96,6 +99,7 @@ async def consume():
 
     try:
         async for msg in consumer:
+            print(f"my_name: {my_name}, consumer: {msg}")
             await kafka_actions[msg.topic](msg)
 
     finally:

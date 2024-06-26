@@ -1,6 +1,7 @@
 # Spidey Kafka
-FastAPI and Apache Kafka example
+
+FastAPI and Apache Kafka example from: <https://medium.com/@arturocuicas/fastapi-and-apache-kafka-4c9e90aab27f>
 
 ```Shell
-docker compose up --build
+make run-docker-compose
 ```

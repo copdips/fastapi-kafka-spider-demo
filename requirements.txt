@@ -1,0 +1,16 @@
+aiokafka
+anyio
+async-timeout
+click
+colorama
+fastapi
+h11
+idna
+kafka-python
+packaging
+pydantic
+python-dotenv
+sniffio
+starlette
+typing-extensions
+uvicorn
